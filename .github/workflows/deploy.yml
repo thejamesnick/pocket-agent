@@ -1,0 +1,41 @@
+name: Deploy Agent
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Navigate to agent directory (or clone if not exists)
+            if [ ! -d "/opt/agent" ]; then
+              git clone https://github.com/${{ github.repository }}.git /opt/agent
+              cd /opt/agent
+            else
+              cd /opt/agent
+              git pull origin main
+            fi
+
+            # Set environment variables from secrets
+            echo "OPENCLAW_GATEWAY_TOKEN=${{ secrets.OPENCLAW_GATEWAY_TOKEN }}" > .env
+            echo "OPENCLAW_GATEWAY_PORT=18789" >> .env
+            echo "OPENCLAW_GATEWAY_BIND=lan" >> .env
+            [ -n "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] && echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+
+            # Build and deploy
+            docker compose down --remove-orphans || true
+            docker compose up -d --build --remove-orphans
+            
+            # Prune unused images to save space
+            docker image prune -f

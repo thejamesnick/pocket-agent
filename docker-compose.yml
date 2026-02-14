@@ -1,0 +1,51 @@
+services:
+  agent:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - HOME=/home/node
+      - NODE_ENV=production
+      - TERM=xterm-256color
+      - OPENCLAW_GATEWAY_BIND=${OPENCLAW_GATEWAY_BIND:-lan}
+      - OPENCLAW_GATEWAY_PORT=${OPENCLAW_GATEWAY_PORT:-18789}
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - XDG_CONFIG_HOME=/home/node/.openclaw
+
+    # ── Resource Limits (optional — uncomment to cap usage) ──
+    # Useful on a shared VPS to prevent the agent eating everything.
+    # On a dedicated box? Leave commented — let it use what's available.
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "2.0"
+    #       memory: "4G"
+
+    volumes:
+      # ── Persistent agent home (installed tools, configs, custom scripts) ──
+      - agent-home:/home/node
+
+      # ── OpenClaw data (sessions, agent state) ──
+      - ${OPENCLAW_CONFIG_DIR:-./data/openclaw}:/home/node/.openclaw
+
+      # ── Workspace (SOUL.md, agents, skills) — live from your repo ──
+      - ${OPENCLAW_WORKSPACE_DIR:-./workspace}:/home/node/.openclaw/workspace
+
+      # ── Agent files (anything the agent creates/saves) ──
+      - ${AGENT_FILES_DIR:-./data/files}:/home/node/files
+
+    ports:
+      # localhost only for local dev
+      # For production VPS: remove 127.0.0.1 prefix + firewall accordingly
+      - "127.0.0.1:${OPENCLAW_GATEWAY_PORT:-18789}:18789"
+    command: [
+      "node", "dist/index.js", "gateway",
+      "--bind", "${OPENCLAW_GATEWAY_BIND:-lan}",
+      "--port", "${OPENCLAW_GATEWAY_PORT:-18789}",
+      "--allow-unconfigured",
+    ]
+
+volumes:
+  agent-home:
+    name: ${COMPOSE_PROJECT_NAME:-agent}-home
