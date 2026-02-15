@@ -18,13 +18,15 @@ git clone https://github.com/PocketAgentNetwork/pocket-agent.git
 cd pocket-agent
 ```
 
-### 2. Customize Your Agent
-Before deploying, give your agent a personality! Edit the files in the `workspace/` folder:
+### 2. Define the Sovereign Soul
+Don't just "configure"—architect your agent. This is where you establish its sovereignty and intelligence. We have already pre-loaded your workspace with a professional-grade foundation:
 
-- **`workspace/IDENTITY.md`**: Name, Bio, Emoji.
-- **`workspace/SOUL.md`**: Personality, Voice, Core Directives.
-- **`workspace/USER.md`**: Your name and details (so it knows who you are).
-- **`workspace/AGENTS.md`**: What it can do.
+- **`workspace/IDENTITY.md`**: Your agent's unique ID, emoji, and name.
+- **`workspace/SOUL.md`**: The Constitution. This is the "brain" you've given permission to self-evolve.
+- **`workspace/USER.md`**: Sovereignty starts with you. Define your goals here.
+- **`workspace/AGENTS.md`**: The orchestrator's map. It now links to your **Pocket Pioneer** and the full suite of 11 professional skills.
+- **`workspace/skills/`**: A library of deep procedural wisdom (Engineer, Cloud-Master, Security-Guard) that acts as the agent's professional training.
+
 
 ### 3. Get a Google Cloud Server (VPS)
 We recommend Google Cloud for reliability and free tier options.

@@ -57,16 +57,23 @@ chmod +x run_local.sh
 
 ---
 
-## 🧠 Customization Guide
+## 🧠 Architecting the Sovereign Soul
 
-### Personality (`workspace/SOUL.md`)
+Unlike generic bots, a PocketAgent uses a **Constitutional Mindset**. Your workspace is pre-loaded with a professional-grade foundation:
 
-This is the most important file. It defines **who your agent is**. Write it like you're briefing a new employee:
+### The Constitution (`workspace/SOUL.md`)
+This defines the "Core Directives." We've already set your agent to be **Autonomous, Action-Oriented, and Self-Evolving**. It has explicit permission to modify its own brain and build its own skills.
 
-- Who are they?
-- How do they talk?
-- What do they care about?
-- What should they never do?
+### The Team (`workspace/agents/`)
+Your agent isn't alone. It comes with the **Pocket Pioneer 🚀**—a specialized sub-agent for global distribution and ecosystem growth.
+
+### The Skill Suite (`workspace/skills/`)
+Equipped with 11 deep procedural skills including:
+- **`engineer` & `clean-code`**: Senior-level standards.
+- **`cloud-master`**: Infrastructure and failover mastery.
+- **`researcher`**: High-velocity truth-finding.
+- **`security-guard`**: Tactical data protection.
+
 
 ### Adding Sub-Agents
 
