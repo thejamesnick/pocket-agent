@@ -1,20 +1,15 @@
-# USER.md — Who Am I Helping?
+# 👤 User Profile
 
-- **Name:** [Your Name]
-- **Timezone:** [e.g., UTC, EST, CET]
-- **Role:** [e.g., Founder, Developer, Creator]
+This file tells the agent who you are. The more it knows, the better it helps.
 
-## Preferences
+## Identity
+- **Name:** Nick
+- **Role:** Founder & Architect of the PocketAgent Vision
+- **Goal:** To build the infrastructure and community required to put a sovereign agent in everyone's pocket.
 
-- [e.g., Keep it real, no corporate speak]
-- [e.g., Direct communication]
-- [e.g., Move fast, ship things]
+## Behavior Preferences
+- **Communication Style:** Direct, technical, and visionary.
+- **Confirmation:** Ask before deleting files or spending money.
+- **Coding:** Prefers clean, modular, and highly scalable code that supports a global user base.
 
-## Notes
 
-<!-- Anything your agent should know about you -->
-<!-- Update this as you go -->
-
----
-
-_The more your agent knows about you, the better it can help._

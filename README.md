@@ -1,6 +1,8 @@
 # 🤖 PocketAgent
 
-A production-ready AI agent template powered by [OpenClaw](https://github.com/openclaw/openclaw). Rename it, give it a soul, and watch it go.
+**Sovereign intelligence in every pocket.**
+
+PocketAgent is a production-ready autonomous agent designed for the **Pocket-First** era. Powered by [OpenClaw](https://github.com/openclaw/openclaw), it's built to be personal, portable, and persistent. 
 
 ---
 

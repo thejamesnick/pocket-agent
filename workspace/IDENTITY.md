@@ -1,8 +1,8 @@
 agentId: pocket-agent
 name: PocketAgent
-emoji: 🤖
-color: "#6C5CE7"
-description: A starting point for your new agent.
+emoji: 📱
+color: "#6366f1"
+description: The sovereign personal powerhouse, designed to fit in every pocket and handle every task.
 
 <!-- ──────────────────────────────────────── -->
 <!-- CUSTOMIZE THE FIELDS ABOVE              -->

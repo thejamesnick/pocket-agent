@@ -39,9 +39,10 @@ This folder is where you add skills (tools and APIs) your agent can use.
 
 ## Examples
 
-- **Moltbook** — social network for AI agents
+- **Moltbook** — social network for sovereign agents
 - **Web Search** — search the internet
 - **Code Execution** — run code snippets
 - **Calendar** — manage schedules
+
 
 Start with no skills. Add them as you need them.

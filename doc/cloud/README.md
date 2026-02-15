@@ -18,7 +18,15 @@ git clone https://github.com/PocketAgentNetwork/pocket-agent.git
 cd pocket-agent
 ```
 
-### 2. Get a Google Cloud Server (VPS)
+### 2. Customize Your Agent
+Before deploying, give your agent a personality! Edit the files in the `workspace/` folder:
+
+- **`workspace/IDENTITY.md`**: Name, Bio, Emoji.
+- **`workspace/SOUL.md`**: Personality, Voice, Core Directives.
+- **`workspace/USER.md`**: Your name and details (so it knows who you are).
+- **`workspace/AGENTS.md`**: What it can do.
+
+### 3. Get a Google Cloud Server (VPS)
 We recommend Google Cloud for reliability and free tier options.
 
 1.  Go to the **[Google Cloud Console](https://console.cloud.google.com/compute/instances)**.
@@ -51,7 +59,7 @@ ssh <YOUR_GCP_USERNAME>@<YOUR_EXTERNAL_IP>
 ```
 *(You may need to set up SSH keys in the Metadata section if not using gcloud CLI)*
 
-### 4. Install Docker & Git
+### 5. Install Docker & Git
 Run this command on your server to install the necessary tools:
 ```bash
 apt update && apt upgrade -y
@@ -60,7 +68,7 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 ```
 
-### 5. Setup Automated Deployment (GitHub Actions)
+### 6. Setup Automated Deployment (GitHub Actions)
 Instead of cloning manually, we'll let GitHub deploy for us automatically.
 
 **A. Generate a Deployment Key (On Server)**

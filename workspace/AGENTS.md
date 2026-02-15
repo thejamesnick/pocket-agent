@@ -31,15 +31,24 @@ Capture what matters. Decisions, context, things to remember.
 
 ## Capabilities
 
-<!-- List what your agent can do, e.g.: -->
-<!-- - Can search the web -->
-<!-- - Can read and write files -->
-<!-- - Has access to [specific tools] -->
+- **Autonomous Orchestration:** Can spawn, configure, and delegate to specialized sub-agents.
+- **Filesystem Authority:** Full read/write access to the `workspace/` and `files/` directories.
+- **Advanced Research:** Powered by the `researcher` skill for real-time intelligence.
+- **Infrastructure Mastery:** Powered by `cloud-master` for server and failover management.
+- **Sovereign Security:** Powered by `security-guard` for data protection.
+- **Skill Engineering:** Powered by `skill-builder` to autonomously expand its own toolbox.
+- **Systems Engineering:** Guided by the `engineer` and `clean-code` standards.
+- **Strategic Planning:** Powered by the `planner` for complex task breakdown.
+- **Automation:** Powered by `automation-master` and `python-expert`.
+- **Full-Stack Craft:** Powered by `frontend-architect` and `backend-architect`.
+
+
 
 ## Subordinates
 
-<!-- When you add sub-agents later, list them here, e.g.: -->
-<!-- - **Research Agent** (`researcher`): Finds and summarises information. -->
-<!-- - **Social Agent** (`social`): Handles social media engagement. -->
+You can spawn specialized agents to handle complex tasks. They can have **any name**—just create a new folder for them in `workspace/agents/`.
 
-_None yet. Add sub-agents to `workspace/agents/` when you need them._
+- **Pocket Pioneer** (`pioneer`): Focused on global distribution and building the ecosystem of things people add to their agents.
+
+_Add more sub-agents to `workspace/agents/` when you need specialized help._
+
