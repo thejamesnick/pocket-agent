@@ -12,6 +12,11 @@ services:
       - OPENCLAW_GATEWAY_PORT=${OPENCLAW_GATEWAY_PORT:-18789}
       - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
       - XDG_CONFIG_HOME=/home/node/.openclaw
+      # PocketModel Keys
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
 
     # ── Resource Limits (optional — uncomment to cap usage) ──
     # Useful on a shared VPS to prevent the agent eating everything.
@@ -34,6 +39,9 @@ services:
 
       # ── Agent files (anything the agent creates/saves) ──
       - ${AGENT_FILES_DIR:-./data/files}:/home/node/files
+      
+      # ── PocketModel Config ──
+      - ./openclaw.json:/home/node/.openclaw/config.json
 
     ports:
       # localhost only for local dev

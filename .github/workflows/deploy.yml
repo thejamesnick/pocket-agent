@@ -32,6 +32,12 @@ jobs:
             echo "OPENCLAW_GATEWAY_PORT=18789" >> .env
             echo "OPENCLAW_GATEWAY_BIND=lan" >> .env
             [ -n "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] && echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+            
+            # PocketModel Keys
+            [ -n "${{ secrets.GEMINI_API_KEY }}" ] && echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+            [ -n "${{ secrets.GROQ_API_KEY }}" ] && echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" >> .env
+            [ -n "${{ secrets.OPENROUTER_API_KEY }}" ] && echo "OPENROUTER_API_KEY=${{ secrets.OPENROUTER_API_KEY }}" >> .env
+            [ -n "${{ secrets.GITHUB_TOKEN }}" ] && echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> .env
 
             # Build and deploy
             docker compose down --remove-orphans || true

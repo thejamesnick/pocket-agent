@@ -1,0 +1,58 @@
+{
+  "auth": {
+    "google": {
+      "api_key": "${GEMINI_API_KEY}",
+      "provider": "google",
+      "label": ":pocketmodel-core" 
+    },
+    "groq": {
+      "api_key": "${GROQ_API_KEY}",
+      "provider": "groq",
+      "label": ":pocketmodel-fast"
+    },
+    "openrouter": {
+      "api_key": "${OPENROUTER_API_KEY}",
+      "provider": "openrouter",
+      "label": ":pocketmodel-brain"
+    },
+    "github": {
+      "api_key": "${GITHUB_TOKEN}",
+      "provider": "github", 
+      "label": ":pocketmodel-anchor"
+    }
+  },
+  "models": [
+    {
+      "id": "gemini-1.5-flash",
+      "provider": "google",
+      "profile": ":pocketmodel-core"
+    },
+    {
+      "id": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "profile": ":pocketmodel-fast"
+    },
+    {
+      "id": "deepseek/deepseek-chat",
+      "provider": "openrouter",
+      "profile": ":pocketmodel-brain"
+    },
+    {
+      "id": "mistral-large",
+      "provider": "github",
+      "profile": ":pocketmodel-anchor"
+    }
+  ],
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "gemini-1.5-flash",
+        "fallbacks": [
+          "llama-3.1-8b-instant",
+          "deepseek/deepseek-chat",
+          "mistral-large"
+        ]
+      }
+    }
+  }
+}

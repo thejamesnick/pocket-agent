@@ -1,28 +1,58 @@
-# ☁️ Running PocketAgent in the Cloud (via GitHub Actions)
+# ☁️ Running PocketAgent in the Cloud
 
-This guide shows you how to deploy PocketAgent to a VPS using **GitHub Actions**. This is often called "CI/CD" — you push code to GitHub, and it automatically updates your server.
+Deploying your agent to a cloud server (VPS) gives it a permanent home where it can run 24/7.
 
-no `.env` files to manage manually!
+We recommend a simple **Manual Setup** to get started in minutes.
 
-## 📋 Requirements
+---
 
-- **Server:** Ubuntu 22.04 / Debian 12
-    - **RAM:** 4GB minimum.
-    - **Storage:** 50GB minimum.
-- **GitHub:** A copy (fork or clone) of this repository.
+## 🚀 Quick Start (Manual Setup)
 
-## 🚀 Step-by-Step Guide
+This is the stress-free way. You log in, clone the code, and run it.
 
-### 1. Prepare Your Server
+### 1. Clone the Repo
+First, clone the official repository to your local machine:
 
-You need to do this only **once**.
-
-SSH into your server:
 ```bash
-ssh root@<YOUR_SERVER_IP>
+git clone https://github.com/PocketAgentNetwork/pocket-agent.git
+cd pocket-agent
 ```
 
-Install **Docker** and **Git**:
+### 2. Get a Google Cloud Server (VPS)
+We recommend Google Cloud for reliability and free tier options.
+
+1.  Go to the **[Google Cloud Console](https://console.cloud.google.com/compute/instances)**.
+2.  Click **Create Instance**.
+3.  **Name:** `pocket-agent`
+4.  **Region:** Choose one close to you (e.g., `us-central1`).
+5.  **Machine Type:** `e2-medium` (2 vCPU, 4GB memory) — minimum recommended.
+6.  **Boot Disk:** Change to **Ubuntu 22.04 LTS** (x86/64). Set size to **50GB**.
+7.  **Firewall:** Check **Allow HTTP traffic** and **Allow HTTPS traffic**.
+8.  Click **Create**.
+9.  Copy the **External IP** address once it's ready.
+
+### 3. Add Your SSH Key (Important!)
+Google Cloud needs your public key to let you log in.
+
+1.  On your **local machine**, view your public key:
+    ```bash
+    cat ~/.ssh/id_ed25519.pub
+    # If that file doesn't exist, generate one: ssh-keygen -t ed25519
+    ```
+2.  Copy the output (starts with `ssh-ed25519...`).
+3.  In Google Cloud Console, go to **Compute Engine** -> **Metadata** -> **SSH Keys**.
+4.  Click **Edit** -> **Add Item**.
+5.  Paste your key and click **Save**.
+
+### 4. Connect to Your Server
+Open your terminal and SSH into your new server:
+```bash
+ssh <YOUR_GCP_USERNAME>@<YOUR_EXTERNAL_IP>
+```
+*(You may need to set up SSH keys in the Metadata section if not using gcloud CLI)*
+
+### 4. Install Docker & Git
+Run this command on your server to install the necessary tools:
 ```bash
 apt update && apt upgrade -y
 apt install -y git curl
@@ -30,89 +60,55 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 ```
 
-**Generate an SSH Keypair for GitHub:**
-We need to let GitHub access your server securely.
+### 5. Setup Automated Deployment (GitHub Actions)
+Instead of cloning manually, we'll let GitHub deploy for us automatically.
+
+**A. Generate a Deployment Key (On Server)**
+Still in your SSH session, run:
 ```bash
 ssh-keygen -t ed25519 -f ~/.ssh/pocket_deploy -N ""
 cat ~/.ssh/pocket_deploy.pub >> ~/.ssh/authorized_keys
-```
-
-Copy the **Private Key** (we'll need it in a second):
-```bash
 cat ~/.ssh/pocket_deploy
-# Copy the entire block starting with -----BEGIN OPENSSH PRIVATE KEY-----
 ```
+Copy the **Private Key** block (starting with `-----BEGIN OPENSSH PRIVATE KEY-----`).
 
-### 2. Configure GitHub Secrets
-
-Go to your repository on GitHub:
-1.  **Settings** → **Secrets and variables** → **Actions**.
+**B. Add Secrets to GitHub**
+1.  Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions**.
 2.  Click **New repository secret**.
+3.  Add these secrets:
 
-Add these secrets:
+| Name | Value |
+|------|-------|
+| `SERVER_HOST` | Your server's External IP |
+| `SERVER_USER` | Your username (e.g. `root` or `gcp_user`) |
+| `SSH_PRIVATE_KEY` | Paste the Private Key you just copied |
+| `OPENCLAW_GATEWAY_TOKEN` | A random string (e.g. run `openssl rand -hex 32`) |
+| **PocketModel Keys** | *(Required for AI)* |
+| `GEMINI_API_KEY` | Get from Google AI Studio |
+| `GROQ_API_KEY` | Get from Groq Console |
+| `OPENROUTER_API_KEY` | Get from OpenRouter |
+| `GITHUB_TOKEN` | A classic PAT (for Mistral access) |
 
-| Secret Name | Value |
-|-------------|-------|
-| `SERVER_HOST` | Your server's IP address (e.g. `123.45.67.89`) |
-| `SERVER_USER` | `root` (or your sudo user) |
-| `SSH_PRIVATE_KEY` | Paste the private key you copied in Step 1. |
-| `OPENCLAW_GATEWAY_TOKEN` | Run `openssl rand -hex 32` locally and paste the result. |
-| `TELEGRAM_BOT_TOKEN` | (Optional) Your Telegram bot token. |
-
-### 3. Deploy!
-
-Just push to the `main` branch.
-
+**C. Deploy!**
+Now, just push your code to the `main` branch on GitHub:
 ```bash
 git add .
-git commit -m "Configure cloud deployment"
+git commit -m "Setup cloud deployment"
 git push origin main
 ```
 
-Go to the **Actions** tab in your GitHub repo to watch the deployment happen.
+Go to the **Actions** tab in your GitHub repo to watch it deploy! 🚀
 
 ---
 
-## 🔧 Adding LLM Keys (Repository Secrets)
+## 🔧 Managing Your Agent
 
-We **do not** use `.env` files on the server. We use **GitHub Secrets**.
-
-When you need to add an API Key (like `OPENAI_API_KEY`):
-
-1.  Go to **GitHub Repo Settings** → **Secrets and variables** → **Actions**.
-2.  Click **New repository secret**.
-3.  Name: `OPENAI_API_KEY`
-4.  Value: `sk-...` (your actual key)
-
-Then, tell the deploy script to use it by editing `.github/workflows/deploy.yml`:
-
-```yaml
-# Add a line for your new key:
-[ -n "${{ secrets.OPENAI_API_KEY }}" ] && echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
-```
-
-Commit and push. GitHub will securely inject that key into the server's environment during the next deploy.
-
----
-
-### 4. Manage & Monitor (SSH)
-
-Even though GitHub handles the updates and secrets, you still "own" the server. You can SSH in from your local terminal anytime to check on things.
-
-**Connect:**
+Even though GitHub handles updates, you can check logs anytime:
 ```bash
-ssh root@<YOUR_SERVER_IP>
-```
+# Connect
+ssh <YOUR_GCP_USERNAME>@<YOUR_EXTERNAL_IP>
 
-**Check Logs:**
-```bash
+# View Logs
 cd /opt/agent
 docker compose logs -f
 ```
-
-**Restart Manually:**
-```bash
-docker compose restart
-```
-
-This gives you the best of both worlds: **Automated secrets management** via GitHub, and **Full Control** via your local terminal.
