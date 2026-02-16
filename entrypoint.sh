@@ -8,6 +8,7 @@ mkdir -p /home/node/.openclaw
 mkdir -p /home/node/.openclaw/workspace
 mkdir -p /home/node/.local/bin
 mkdir -p /home/node/files
+mkdir -p /home/node/.openclaw/workspace/memory
 
 # ── Dynamic Configuration ──
 # Check for keys and generate config.json
