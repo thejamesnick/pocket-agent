@@ -1,8 +1,0 @@
-node_modules/
-.DS_Store
-.env
-*.log
-sessions/
-.openclaw/
-workspace_init/
-data/

@@ -3,7 +3,7 @@
 This file tells the agent who you are. The more it knows, the better it helps.
 
 ## Identity
-- **Name:** Nick
+- **Name:** Yuko
 - **Role:** Founder & Architect of the PocketAgent Vision
 - **Goal:** To build the infrastructure and community required to put a sovereign agent in everyone's pocket.
 

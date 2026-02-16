@@ -1,0 +1,32 @@
+# ── ROOT GITIGNORE ──
+# This file controls what your IDE and Git will see.
+
+# 1. Ignore runtime artifacts (temp files)
+node_modules/
+dist/
+.env
+.DS_Store
+*.log
+npm-debug.log*
+
+# 2. Ignore OpenClaw local engine builds
+.openclaw-engine/
+.local-config/
+data/
+
+# 3. Ignore IDE settings
+.vscode/
+.idea/
+
+# 4. WORKSPACE TRACKING RULES
+# We WANT to track user modification files:
+# workspace/USER.md
+# workspace/SOUL.md
+# workspace/AGENTS.md
+# workspace/skills/
+# workspace/agents/
+
+# We DO NOT WANT to track large/temp workspace data:
+workspace/memory/*.tmp
+workspace/files/tmp/
+workspace/node_modules/
