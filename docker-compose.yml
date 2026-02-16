@@ -41,7 +41,12 @@ services:
       - ${AGENT_FILES_DIR:-./data/files}:/home/node/files
       
       # ── PocketModel Config ──
-      - ./openclaw.json:/home/node/.openclaw/config.json
+      # ── PocketModel Config ──
+      # We mount the local openclaw.json as a template, so the script can read it
+      - ./openclaw.json:/app/pocket_model.json:ro
+      # We mount the scripts directory so entrypoint can run the generator
+      - ./scripts:/app/scripts:ro
+
 
     ports:
       # localhost only for local dev

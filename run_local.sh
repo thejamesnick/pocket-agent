@@ -39,6 +39,27 @@ export $(grep -v '^#' .env | xargs)
 echo "🚀 Starting PocketAgent (Local Mode)..."
 echo "   Gatekeeper: http://localhost:${OPENCLAW_GATEWAY_PORT:-18789}"
 
+# ── Dynamic Configuration (Local) ──
+export POCKET_MODEL_TEMPLATE="$(pwd)/openclaw.json"
+export POCKET_MODEL_OUTPUT="$(pwd)/openclaw-runtime.json"
+# We need to tell the gateway to use this config? 
+# OpenClaw usually looks in ~/.openclaw/config.json or we can pass a config path?
+# If we can't pass a config path, we might need to copy it to ~/.openclaw or set XDG_CONFIG_HOME.
+# Let's set XDG_CONFIG_HOME to a local .data directory to avoid messing with user's actual home?
+# Or we can just set it to the current directory if OpenClaw supports it.
+# The standard is XDG_CONFIG_HOME.
+
+export XDG_CONFIG_HOME="$(pwd)/.local-config"
+mkdir -p "$XDG_CONFIG_HOME"
+export POCKET_MODEL_OUTPUT="$XDG_CONFIG_HOME/config.json"
+
+if [ -f "scripts/configure_pocket_model.js" ]; then
+    echo "⚙️  Generating runtime config..."
+    node scripts/configure_pocket_model.js
+else
+    echo "⚠️  Config script not found."
+fi
+
 # We run the built engine, pointing it to our workspace
 # Note: We use absolute path for workspace to be safe
 WORKSPACE_ABS_PATH="$(pwd)/workspace"
